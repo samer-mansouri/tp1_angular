@@ -1,4 +1,4 @@
-import { Input, OnInit } from '@angular/core';
+import { Input, OnInit, inject } from '@angular/core';
 import {
   Directive,
   ElementRef,
@@ -7,13 +7,15 @@ import {
 } from '@angular/core';
 
 @Directive({
-  selector: '[appHighlight]',
+    selector: '[appHighlight]',
+    standalone: true,
 })
 export class HighlightDirective implements OnInit {
+  private element = inject(ElementRef);
+
   @Input() in = 'yellow';
   @Input() out = 'red';
   @HostBinding('style.backgroundColor') bgc = this.out;
-  constructor(private element: ElementRef) {}
   ngOnInit() {
     this.bgc = this.out;
   }

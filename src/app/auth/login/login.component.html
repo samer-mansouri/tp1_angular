@@ -4,9 +4,11 @@
     <input #emailInput="ngModel" email required ngModel name="email" type="email" class="form-control"
       id="exampleInputEmail1" aria-describedby="emailHelp">
     <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-    <div *ngIf="emailInput.invalid && emailInput.touched" class="alert alert-danger">
-      Veuillez saisir un email correct
-    </div>
+    @if (emailInput.invalid && emailInput.touched) {
+      <div class="alert alert-danger">
+        Veuillez saisir un email correct
+      </div>
+    }
   </div>
   <div class="mb-3">
     <label for="exampleInputPassword1" class="form-label">Password</label>
@@ -14,5 +16,5 @@
       id="exampleInputPassword1">
   </div>
   <button (click)="login(loginForm.value)" [disabled]="loginForm.invalid" type="submit"
-    class="btn btn-primary">Submit</button>
+  class="btn btn-primary">Submit</button>
 </form>
