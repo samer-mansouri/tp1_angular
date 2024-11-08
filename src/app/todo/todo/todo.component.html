@@ -1,18 +1,139 @@
-<div class="row">
-  <div class="col">
-    <ol class="list-group">
-      @for (todo of todos; track todo) {
-        <li class="list-group-item">
-          {{todo.name}} : {{todo.content}}
-          <i (click)="deleteTodo(todo)" class="fa fa-trash" aria-hidden="true"></i>
-        </li>
-      }
-    </ol>
+<div class="col">
+  name:
+  <input
+    rainbow
+    [(ngModel)]="todo.name"
+    type="text"
+    class="form-control"
+  />
+  content:
+  <input [(ngModel)]="todo.content" type="text" class="form-control" />
+  <button
+    (click)="addTodo()"
+    [disabled]="!todo.name.trim() || !todo.content.trim()"
+    class="btn btn-primary m-2"
+  >
+    add
+  </button>
+</div>
+<div class="row g-3 mt-3">
+  <!-- Waiting Todos Card -->
+  <div class="col-md-4">
+    <div class="card text-bg-primary mb-3 shadow-lg">
+      <div class="card-header">
+        <h3 class="text-white">Waiting Todos</h3>
+      </div>
+      <div class="card-body">
+        <ol class="list-group list-group-flush">
+          @for (todo of getWaitingTodos(); track todo.id) {
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+              <strong>{{ todo.name }}</strong> : {{ todo.content }}
+            </div>
+            <div class="d-flex gap-2">
+              <i
+                (click)="deleteTodo(todo)"
+                class="fa fa-trash text-danger cursor-pointer"
+                aria-hidden="true"
+                title="Delete Todo"
+              ></i>
+              <i
+                (click)="changeStatus(todo, 'in progress')"
+                class="fa fa-spinner text-warning cursor-pointer"
+                aria-hidden="true"
+                title="Mark as In Progress"
+              ></i>
+              <i
+                (click)="changeStatus(todo, 'done')"
+                class="fa fa-check-square text-success cursor-pointer"
+                aria-hidden="true"
+                title="Mark as Done"
+              ></i>
+            </div>
+          </li>
+          }
+        </ol>
+      </div>
+    </div>
   </div>
-  <div rainbow class="col">
-    name: <input rainbow [(ngModel)]="todo.name" type="text" class="form-control">
-    content: <input  rainbow [(ngModel)]="todo.content" type="text" class="form-control">
-    <button (click)="addTodo()" [disabled]="!todo.name.trim() || !todo.content.trim()"
-    class="btn btn-primary m-2">add</button>
+
+  <!-- In Progress Todos Card -->
+  <div class="col-md-4">
+    <div class="card text-bg-warning mb-3 shadow-lg">
+      <div class="card-header">
+        <h3 class="text-dark">In Progress Todos</h3>
+      </div>
+      <div class="card-body">
+        <ol class="list-group list-group-flush">
+          @for (todo of getInProgressTodos(); track todo) {
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+              <strong>{{ todo.name }}</strong> : {{ todo.content }}
+            </div>
+            <div class="d-flex gap-2">
+              <i
+                (click)="deleteTodo(todo)"
+                class="fa fa-trash text-danger cursor-pointer"
+                aria-hidden="true"
+                title="Delete Todo"
+              ></i>
+              <i
+                (click)="changeStatus(todo, 'waiting')"
+                class="fa fa-pause text-info cursor-pointer"
+                aria-hidden="true"
+                title="Pause Todo"
+              ></i>
+              <i
+                (click)="changeStatus(todo, 'done')"
+                class="fa fa-check-square text-success cursor-pointer"
+                aria-hidden="true"
+                title="Mark as Done"
+              ></i>
+            </div>
+          </li>
+          }
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- Done Todos Card -->
+  <div class="col-md-4">
+    <div class="card text-bg-success mb-3 shadow-lg">
+      <div class="card-header">
+        <h3 class="text-white">Done Todos</h3>
+      </div>
+      <div class="card-body">
+        <ol class="list-group list-group-flush">
+          @for (todo of getDoneTodos(); track todo) {
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+              <strong>{{ todo.name }}</strong> : {{ todo.content }}
+            </div>
+            <div class="d-flex gap-2">
+              <i
+                (click)="deleteTodo(todo)"
+                class="fa fa-trash text-danger cursor-pointer"
+                aria-hidden="true"
+                title="Delete Todo"
+              ></i>
+              <i
+                (click)="changeStatus(todo, 'waiting')"
+                class="fa fa-pause text-info cursor-pointer"
+                aria-hidden="true"
+                title="Revert to Waiting"
+              ></i>
+              <i
+                (click)="changeStatus(todo, 'in progress')"
+                class="fa fa-spinner text-warning cursor-pointer"
+                aria-hidden="true"
+                title="Mark as In Progress"
+              ></i>
+            </div>
+          </li>
+          }
+        </ol>
+      </div>
+    </div>
   </div>
 </div>

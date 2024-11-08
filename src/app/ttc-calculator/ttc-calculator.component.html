@@ -1,0 +1,47 @@
+<div class="container">
+    <h2>TTC Calculator</h2>
+    <form [formGroup]="ttcForm" class="form-horizontal">
+      <div class="form-group">
+        <input
+          type="number"
+          class="form-control"
+          placeholder="Prix HT"
+          formControlName="unitPrice"
+        />
+        <label>Prix HT</label>
+      </div>
+  
+      <div class="form-group">
+        <input
+          type="number"
+          class="form-control"
+          placeholder="Quantité"
+          formControlName="quantity"
+        />
+        <label>Quantité</label>
+      </div>
+  
+      <div class="form-group">
+        <input
+          type="number"
+          class="form-control"
+          placeholder="TVA"
+          formControlName="tva"
+        />
+        <label>TVA</label>
+      </div>
+    </form>
+  
+    <div class="results">
+      <div class="result-item blue">
+        <h4>Prix unitaire TTC : {{ unitPriceTTC | number: '1.2-2' }} DT</h4>
+      </div>
+      <div class="result-item green">
+        <h4>Prix total TTC : {{ totalTTC | number: '1.2-2' }} DT</h4>
+      </div>
+      <div class="result-item red">
+        <h4>Discount : {{ discount | number: '1.2-2' }} DT</h4>
+      </div>
+    </div>
+  </div>
+  

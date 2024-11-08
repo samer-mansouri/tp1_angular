@@ -28,6 +28,7 @@
             routerLinkActive="active text-primary"
             >Home</a
             >
+            
             <a
               class="nav-link"
               [routerLinkActiveOptions]="{ exact: true }"
@@ -43,6 +44,12 @@
                   >Add Cv</a
                   >
                 }
+                <a
+                  class="nav-link"
+                  [routerLink]="['ttc']"
+                  routerLinkActive="active text-primary"
+                  >TTC</a
+                  >
                 <a
                   class="nav-link"
                   [routerLink]="['todo']"

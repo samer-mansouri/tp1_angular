@@ -13,11 +13,13 @@ import { CvComponent } from "./cv/cv/cv.component";
 import { DetailsCvComponent } from "./cv/details-cv/details-cv.component";
 import { RhComponent } from "./optimizationPattern/rh/rh.component";
 import { AppComponent } from "./app.component";
+import { TtcCalculatorComponent } from "./ttc-calculator/ttc-calculator.component";
 // import { RainbowTextDirective } from "./rainbow-text.directive";
 
 const routes: Route[] = [
   { path: "login", component: LoginComponent },
   { path: "rh", component: RhComponent },
+  { path: "ttc", component: TtcCalculatorComponent },
   {
     path: "cv",
     component: CvComponent,

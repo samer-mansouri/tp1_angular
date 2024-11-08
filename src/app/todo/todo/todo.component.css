@@ -1,0 +1,34 @@
+.card-header {
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+
+  .list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .cursor-pointer {
+    cursor: pointer;
+  }
+
+  .gap-2 {
+    gap: 0.5rem;
+  }
+
+  .shadow-lg {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-body {
+    padding: 1.25rem;
+  }
+
+  .text-dark {
+    color: #343a40;
+  }
+
+  .text-white {
+    color: #ffffff;
+  }

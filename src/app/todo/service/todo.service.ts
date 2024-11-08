@@ -1,4 +1,5 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, Signal, WritableSignal, computed, inject, signal } from '@angular/core';
+import { TodoStatus } from '../model/TodoStatus';
 import { Todo } from '../model/todo';
 import { LoggerService } from '../../services/logger.service';
 
@@ -10,7 +11,10 @@ let n = 1;
 export class TodoService {
   private loggerService = inject(LoggerService);
 
-  private todos: Todo[] = [];
+  todos : WritableSignal<Todo[]> = signal([]);
+  waitingTodos : Signal<Todo[]> = computed(() => this.todos().filter(todo => todo.status === 'waiting'));
+  inProgressTodos : Signal<Todo[]> = computed(() => this.todos().filter(todo => todo.status === 'in progress'));
+  doneTodos : Signal<Todo[]> = computed(() => this.todos().filter(todo => todo.status === 'done'));
 
   /**
    * elle retourne la liste des todos
@@ -18,8 +22,32 @@ export class TodoService {
    * @returns Todo[]
    */
   getTodos(): Todo[] {
-    return this.todos;
+    return this.todos();
   }
+  /**
+   * elle retourne la liste des waiting todos
+   *
+   * @returns Todo[]
+   */
+  getWaitingTodos(): Todo[] {
+    return this.waitingTodos();
+  }
+/**
+   * elle retourne la liste des inProgress todos
+   *
+   * @returns Todo[]
+   */
+  getInProgressTodos(): Todo[] {
+    return this.inProgressTodos();
+  }
+/**
+   * elle retourne la liste des done todos
+   *
+   * @returns Todo[]
+   */
+  getDoneTodos(): Todo[] {
+    return this.doneTodos();
+  } 
 
   /**
    *Elle permet d'ajouter un todo
@@ -28,7 +56,7 @@ export class TodoService {
    *
    */
   addTodo(todo: Todo): void {
-    this.todos.push(todo);
+    this.todos.set([...this.todos(), todo]);
   }
 
   /**
@@ -38,9 +66,8 @@ export class TodoService {
    * @returns boolean
    */
   deleteTodo(todo: Todo): boolean {
-    const index = this.todos.indexOf(todo);
-    if (index > -1) {
-      this.todos.splice(index, 1);
+    if (this.todos().includes(todo)) {
+      this.todos.set(this.todos().filter((t) => t.id !== todo.id));
       return true;
     }
     return false;
@@ -50,6 +77,17 @@ export class TodoService {
    * Logger la liste des todos
    */
   logTodos() {
-    this.loggerService.logger(this.todos);
+    this.loggerService.logger(this.todos());
+    this.loggerService.logger(this.waitingTodos());
+  }
+
+  /**
+   * Change le status du todo
+   *
+   * @param todo: Todo
+   * @param status: TodoStatus
+   */
+  changeStatus(todo: Todo, status: TodoStatus) {
+    this.todos.set(this.todos().map((t) => (t.id === todo.id ? { ...t, status } : t)));
   }
 }
